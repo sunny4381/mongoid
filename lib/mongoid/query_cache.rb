@@ -245,6 +245,7 @@ module Mongoid
           cursor = QueryCache.cache_table[key]
           if cursor
             limited_docs = cursor.to_a[0...limit.abs]
+            cursor = cursor.dup
             cursor.instance_variable_set(:@cached_documents, limited_docs)
           end
         end
