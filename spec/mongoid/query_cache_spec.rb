@@ -475,6 +475,24 @@ describe Mongoid::QueryCache do
       end
     end
   end
+
+  context 'when narrowed results' do
+
+    before do
+      3.times do
+        Person.create
+      end
+    end
+
+    it do
+      expect(Person.gt(age: 0).order_by(name: 1).to_a.count).to eq 3
+
+      Person.gt(age: 0).order_by(name: 1).first
+
+      expect(Person.gt(age: 0).order_by(name: 1).to_a.count).to eq 3
+    end
+
+  end
 end
 
 describe Mongoid::QueryCache::Middleware do
